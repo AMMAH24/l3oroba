@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:title" content="حملة تبرعات للخيمة الموقرة, فريق عين بلها">
+    <meta property="og:description" content="فريق 'عين بلها' هو أحد الفرق النشطة ضمن اتحاد أهل محمذن، ويضم مجموعة من الشباب المتطوعين المؤمنين بأهمية العمل الجماعي والخدمة المجتمعية. يسعى الفريق إلى تعزيز روح التعاون والمبادرة، من خلال تنفيذ مشاريع خيرية وتنموية تُجسد قيم الاتحاد وتخدم الأهداف النبيلة لأفراده.
+
+    يعمل الفريق بانسجام مع بقية مكونات الاتحاد، ويشارك في حملات الدعم والتبرع، ومبادرات التنمية المجتمعية، بما يعكس التزامه الصادق بالمساهمة الإيجابية والبنّاءة في محيطه.">
+    <meta property="og:image" content="https://ammah24.github.io/..">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://ammah24.github.io/..">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريق عين بلها</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #27ae60;
+            --text: #333;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--light);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            width: 350px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .badge {
+            position: absolute;
+            top: -7px;
+            left: 0px;
+            background: var(--secondary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .admin-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .admin-panel {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            margin: -25px -25px 20px -25px;
+            display: none;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 10px 0 5px;
+            text-align: center;
+        }
+
+        .team {
+            color: #3498db;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .amount {
+            background: var(--secondary);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .description {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #2ecc71;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Tajawal';
+        }
+
+        #mainContent { display: block; }
+        #breakMessage {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+        }
+
+        /* Password Modal */
+        #passwordModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-content button:hover {
+            background: #1a252f;
+        }
+
+        /* Donations Modal */
+        .donations-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .donations-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            direction: rtl;
+            text-align: right;
+            width: 350px;
+            position: relative;
+        }
+
+        .donation-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Donation History */
+        .donation-history {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .history-amount {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* Admin Actions */
+        .admin-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Tajawal';
+        }
+
+        .edit-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="passwordModal">
+    <div class="modal-content">
+        <h2>أدخل كلمة السر للدخول كأدمن</h2>
+        <input type="password" id="adminPassword" placeholder="كلمة السر">
+        <button onclick="checkPassword()">دخول</button>
+    </div>
+</div>
+
+<!-- Donations Modal -->
+<div class="donations-modal" id="donationsModal">
+    <div class="donations-content">
+        <button class="close-modal" onclick="closeDonationsModal()">×</button>
+        <h3>سجل التبرعات</h3>
+        <div id="donationsList"></div>
+    </div>
+</div>
+
+<div class="card" id="donationCard">
+    <button class="admin-toggle" id="adminToggle">⚙️</button>
+    <div class="badge" id="statusBadge">جديد</div>
+
+    <div class="admin-panel" id="adminPanel">
+        <h3>لوحة الأدمن</h3>
+        <label for="targetAmount">المبلغ المطلوب:</label>
+        <input type="number" id="targetAmount" value="10000">
+
+        <label for="campaignStatus">حالة الحملة:</label>
+        <select id="campaignStatus" onchange="updateStatus()">
+            <option value="جديد">جديد</option>
+            <option value="عاجل">عاجل</option>
+            <option value="استراحة">استراحة</option>
+        </select>
+        
+        <button class="btn" onclick="viewAllDonations()" style="margin-top: 10px; background: #3498db;">عرض جميع التبرعات</button>
+        <button class="btn" onclick="saveChanges()">حفظ التغييرات</button>
+    </div>
+
+    <div id="mainContent">
+        <h1>فريق عين بلها</h1>
+        <div class="team">العروبـة شعـارنا</div>
+
+        <div class="progress-container">
+            <div class="progress-text">
+                <span id="collectedAmount">0 أوقية</span>
+                <span id="targetAmountDisplay">10,000 أوقية</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="amount" id="currentAmount">0 أوقية</div>
+        <p class="description">ساهم معنا في دعم حملة التبرع للخيمة "هي لله هي لله ,لا للسلطـة ولا للجــاه"</p>
+        <button class="btn" onclick="window.location.href='purchase.html'">تبرع الآن</button>
+        
+        <!-- Public Donation History -->
+        <div class="donation-history">
+            <div class="history-title">آخر التبرعات</div>
+            <div id="publicDonationHistory"></div>
+        </div>
+    </div>
+
+    <div id="breakMessage">استريحوا شباب العروبة</div>
+</div>
+
+<script>
+    let campaign = {
+        target: 10000,
+        collected: 0,
+        status: "جديد"
+    };
+
+    document.getElementById('adminToggle').addEventListener('click', function () {
+        document.getElementById('passwordModal').style.display = 'flex';
+    });
+
+    function checkPassword() {
+        const input = document.getElementById('adminPassword').value;
+        if (input === 'mewmew') {
+            document.getElementById('passwordModal').style.display = 'none';
+            toggleAdminPanel();
+        } else {
+            alert('كلمة السر غير صحيحة');
+        }
+    }
+
+    function loadCampaignData() {
+        const savedData = localStorage.getItem('campaignData');
+        if (savedData) {
+            campaign = JSON.parse(savedData);
+        }
+        
+        // Load total collected amount from localStorage
+        const totalCollected = parseFloat(localStorage.getItem('totalCollected')) || 0;
+        campaign.collected = totalCollected;
+        
+        document.getElementById('targetAmount').value = campaign.target;
+        document.getElementById('campaignStatus').value = campaign.status;
+        document.getElementById('statusBadge').textContent = campaign.status;
+        document.getElementById('targetAmountDisplay').textContent = formatNumber(campaign.target) + ' أوقية';
+        document.getElementById('currentAmount').textContent = formatNumber(campaign.collected) + ' أوقية';
+        updateStatus();
+        updateProgress();
+        loadPublicDonationHistory();
+    }
+
+    function updateStatus() {
+        campaign.status = document.getElementById('campaignStatus').value;
+        document.getElementById('statusBadge').textContent = campaign.status;
+        if (campaign.status === "استراحة") {
+            document.getElementById('mainContent').style.display = "none";
+            document.getElementById('breakMessage').style.display = "block";
+        } else {
+            document.getElementById('mainContent').style.display = "block";
+            document.getElementById('breakMessage').style.display = "none";
+        }
+    }
+
+    function saveChanges() {
+        campaign.target = parseInt(document.getElementById('targetAmount').value);
+        campaign.status = document.getElementById('campaignStatus').value;
+        localStorage.setItem('campaignData', JSON.stringify(campaign));
+        updateStatus();
+        document.getElementById('targetAmountDisplay').textContent = formatNumber(campaign.target) + ' أوقية';
+        updateProgress();
+        toggleAdminPanel();
+        alert('تم حفظ التغييرات بنجاح');
+    }
+
+    function updateProgress() {
+        const progress = (campaign.collected / campaign.target) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('collectedAmount').textContent = formatNumber(campaign.collected) + ' أوقية';
+        document.getElementById('currentAmount').textContent = formatNumber(campaign.collected) + ' أوقية';
+    }
+
+    function toggleAdminPanel() {
+        const panel = document.getElementById('adminPanel');
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function loadPublicDonationHistory() {
+        const donations = JSON.parse(localStorage.getItem('donations')) || [];
+        const historyContainer = document.getElementById('publicDonationHistory');
+        
+        if (donations.length === 0) {
+            historyContainer.innerHTML = '<p>لا توجد تبرعات مسجلة بعد</p>';
+            return;
+        }
+
+        let html = '';
+        // Show only last 5 donations to users (newest first)
+        const recentDonations = donations.slice(-5).reverse();
+        
+        recentDonations.forEach(d => {
+            const date = new Date(d.date);
+            html += `
+                <div class="history-item">
+                    <div>
+                        <span class="history-amount">${d.amount} أوقية</span>
+                        <span> - ${d.donor}</span>
+                    </div>
+                    <div>${date.toLocaleDateString()}</div>
+                </div>
+            `;
+        });
+
+        historyContainer.innerHTML = html;
+    }
+
+    function viewAllDonations() {
+        const donations = JSON.parse(localStorage.getItem('donations')) || [];
+        const modal = document.getElementById('donationsModal');
+        const list = document.getElementById('donationsList');
+        
+        if (donations.length === 0) {
+            alert("لا توجد تبرعات مسجلة بعد");
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        
+        // Show all donations in reverse order (newest first)
+        donations.slice().reverse().forEach((d, index) => {
+            const date = new Date(d.date);
+            const originalIndex = donations.length - index - 1;
+            html += `
+                <div class="donation-item">
+                    <div>
+                        <strong>${index + 1}. ${d.donor}: ${d.amount} أوقية</strong>
+                        <small>${date.toLocaleDateString()} ${date.toLocaleTimeString()}</small>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="edit-btn" onclick="editDonation(${originalIndex})">تعديل</button>
+                        <button class="delete-btn" onclick="deleteDonation(${originalIndex})">حذف</button>
+                    </div>
+                </div>
+            `;
+            total += d.amount;
+        });
+
+        html += `<div style="padding: 15px; background: #f8f9fa; margin-top: 10px; border-radius: 5px;">
+            <strong>المجموع الكلي: ${formatNumber(total)} أوقية</strong>
+        </div>`;
+        
+        list.innerHTML = html;
+        modal.style.display = 'flex';
+    }
+
+    function editDonation(index) {
+        const donations = JSON.parse(localStorage.getItem('donations'));
+        const donation = donations[index];
+        
+        const newAmount = prompt("المبلغ الجديد:", donation.amount);
+        if (newAmount === null || isNaN(newAmount)) return;
+        
+        const newDonor = prompt("اسم المتبرع الجديد:", donation.donor);
+        if (newDonor === null) return;
+        
+        // Calculate difference to update total
+        const amountDiff = parseFloat(newAmount) - donation.amount;
+        
+        donations[index] = {
+            amount: parseFloat(newAmount),
+            donor: newDonor,
+            date: donation.date
+        };
+        
+        localStorage.setItem('donations', JSON.stringify(donations));
+        
+        // Update total collected
+        let total = parseFloat(localStorage.getItem('totalCollected')) || 0;
+        total += amountDiff;
+        localStorage.setItem('totalCollected', total.toString());
+        campaign.collected = total;
+        
+        updateProgress();
+        viewAllDonations();
+        loadPublicDonationHistory();
+    }
+
+    function deleteDonation(index) {
+        if (!confirm("هل أنت متأكد من حذف هذا التبرع؟")) return;
+        
+        const donations = JSON.parse(localStorage.getItem('donations'));
+        const deletedAmount = donations[index].amount;
+        donations.splice(index, 1);
+        
+        localStorage.setItem('donations', JSON.stringify(donations));
+        
+        // Update total collected
+        let total = parseFloat(localStorage.getItem('totalCollected')) || 0;
+        total -= deletedAmount;
+        localStorage.setItem('totalCollected', total.toString());
+        campaign.collected = total;
+        
+        updateProgress();
+        viewAllDonations();
+        loadPublicDonationHistory();
+    }
+
+    function closeDonationsModal() {
+        document.getElementById('donationsModal').style.display = 'none';
+    }
+
+    // Load data when page starts
+    window.onload = loadCampaignData;
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الشراء</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        * {
+            font-family: Cairo;
+        }
+        body {
+            font-family: 'Cairo', sans-serif !important;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 18px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #33deff;
+            box-shadow: 0 0 5px rgba(51, 222, 255, 0.3);
+        }
+
+        .form-input.invalid {
+            border-color: #ff3333;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 18px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+        }
+        
+        .btn:hover {
+            background: #1EBE5D;
+        }
+
+        .account-number {
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            font-weight: bold;
+            font-size: 20px;
+            border: 2px solid #33deff;
+            background-color: #f8fdff;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: #333;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .logo img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #f4f4f4;
+        }
+
+        .payment-logos {
+            margin-top: 30px;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .payment-logo {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            background-color: #33deff;
+        }
+
+        .copy-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .copy-icon {
+            cursor: pointer;
+            font-size: 18px;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+        }
+
+        .copy-icon:hover {
+            color: #0056b3;
+        }
+
+        .copy-success {
+            color: #28a745;
+            font-size: 14px;
+            margin-right: 5px;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            
+            .account-number {
+                font-size: 18px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+    
+</head>
+
+<body>
+    
+    <div class="container">
+        
+        <h2>إتمام عملية الدفع</h2>
+        <p>يرجى تعبئة المعلومات التالية لإتمام عملية التبرع:</p>
+        
+        <div class="form-group">
+            <label for="amount" class="form-label">مبلغ التبرع (أوقية)</label>
+            <input type="number" id="amount" class="form-input" placeholder="أدخل المبلغ" required min="1">
+        </div>
+        
+        <div class="form-group">
+            <label for="donor" class="form-label">مفتاح المتبرع</label>
+            <input type="text" id="donor" class="form-input" placeholder="أدخل مفتاحك" required>
+        </div>
+        
+        <p>للدفع عبر <b>بنكيلي</b> يرجى تحويل المبلغ إلى:</p>
+        
+        <div class="copy-container">
+            <span id="account-number" class="account-number">20994700</span>
+            <span class="copy-icon" onclick="copyText()" title="نسخ">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
+            </span>
+            <span class="copy-success" id="copy-success">✓ تم النسخ</span>
+        </div>
+        
+        <p>بعد التحويل، اضغط على الزر أدناه لإرسال إثبات الدفع عبر واتساب:</p>
+
+        <button id="whatsapp-btn" class="btn">تأكيد الدفع</button>
+        
+        <div class="payment-logos">
+            <div class="logos">
+                <img src="images/bkly_white_250x250.png" alt="بنكيلي" class="payment-logo">
+                <img src="images/icon.png" alt="بنكيلي" class="payment-logo">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyText() {
+            const text = document.getElementById("account-number").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const successElement = document.getElementById("copy-success");
+                successElement.style.display = "inline";
+                setTimeout(() => {
+                    successElement.style.display = "none";
+                }, 2000);
+            });
+        }
+
+        document.getElementById("whatsapp-btn").addEventListener("click", function() {
+            const amount = document.getElementById("amount").value;
+            const donorInput = document.getElementById("donor");
+            const donor = donorInput.value;
+            const accountNumber = document.getElementById("account-number").innerText;
+            
+            if (!amount) {
+                alert("يرجى إدخال مبلغ التبرع");
+                return;
+            }
+            
+            // Validate donor key - must be 10 characters with both letters and numbers
+            if (!donor || donor.length !== 10 || !/[a-zA-Z]/.test(donor) || !/[0-9]/.test(donor)) {
+                donorInput.classList.add("invalid");
+                setTimeout(() => {
+                    donorInput.classList.remove("invalid");
+                }, 1000);
+                return;
+            }
+            
+            // Save the donation to localStorage
+            const donation = {
+                amount: parseFloat(amount),
+                donor: donor,
+                date: new Date().toISOString()
+            };
+            
+            // Get existing donations or create new array
+            const donations = JSON.parse(localStorage.getItem('donations')) || [];
+            donations.push(donation);
+            localStorage.setItem('donations', JSON.stringify(donations));
+            
+            // Update total collected amount
+            updateTotalCollected(parseFloat(amount));
+            
+            const message = `تم الدفع بنجاح%0A%0Aالمبلغ: ${amount} أوقية%0Aالمتبرع: ${donor}%0Aرقم الحساب: ${accountNumber}`;
+            const whatsappUrl = `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, "_blank");
+        });
+
+        function updateTotalCollected(newAmount) {
+            // Get current total or default to 0
+            let total = parseFloat(localStorage.getItem('totalCollected')) || 0;
+            total += newAmount;
+            localStorage.setItem('totalCollected', total.toString());
+        }
+    </script>
+    
+</body>
+
+</html>
